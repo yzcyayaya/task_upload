@@ -1,0 +1,24 @@
+service:
+  app_mode: debug
+  http_port: 9000
+minio:
+  endpoint: 127.0.0.1:9002
+  access_ｋey_id: root
+  secret_access_key: 123456
+  # 本地文件存储地址
+  local_file: /mydata
+mysql:
+  db: mysql
+  # mysql ip地址
+  db_host: 127.0.0.1
+  # mysql 端口号
+  db_port: 3310
+  # mysql 用户名
+  db_user: root
+  # mysql 密码
+  db_pass_word: 000000
+  # mysql 名字
+  db_name: upload_task
+#prod
+
+#  sudo ./minio server --address '127.0.0.1:9002' --console-address '127.0.0.1:9001' /data
