@@ -3,7 +3,6 @@ package config
 import (
 	"controller_minio/model"
 	"embed"
-	"fmt"
 	"gopkg.in/yaml.v3"
 )
 
@@ -27,6 +26,7 @@ type Mysql struct {
 	DbUser     string `yaml:"db_user"`
 	DbPassWord string `yaml:"db_pass_word"`
 	DbName     string `yaml:"db_name"`
+	Regular    string `yaml:"regular"`
 }
 
 type Minio struct {
@@ -55,11 +55,11 @@ func init() {
 		panic(err)
 	}
 	// 加载学生信息
-	studyFile, err := stu.ReadFile("students.yaml")
+	studentsFile, err := stu.ReadFile("students.yaml")
 	if err != nil {
 		panic(err)
 	}
-	err = yaml.Unmarshal(studyFile, &model.Students)
+	err = yaml.Unmarshal(studentsFile, &model.Students)
 	if err != nil {
 		panic(err)
 	}
@@ -70,6 +70,5 @@ func init() {
 func LoadData() {
 	mysqlConf := Content.MysqlConf
 	dsn := mysqlConf.DbUser + ":" + mysqlConf.DbPassWord + "@" + "tcp(" + mysqlConf.DbHost + ":" + mysqlConf.DbPort + ")/" + mysqlConf.DbName + "?charset=utf8mb4&parseTime=true"
-	fmt.Println(dsn)
 	model.DataBase(dsn)
 }

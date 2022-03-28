@@ -1,10 +1,10 @@
 package e
 
 var MsgFlags = map[int]string{
-	SUCCESS:       "ok",
-	ERROR:         "fail",
-	InvalidParams: "请求参数错误",
-
+	SUCCESS:                    "ok",
+	ERROR:                      "fail",
+	InvalidParams:              "请求参数错误",
+	ErrorCaptcha:               "验证码错误",
 	ErrorAuthCheckTokenFail:    "Token鉴权失败",
 	ErrorAuthCheckTokenTimeout: "Token已超时",
 	ErrorAuthToken:             "Token生成失败",

@@ -18,24 +18,36 @@ func NewRouter() *gin.Engine {
 	r.Use(middlewares.Cors())
 	v1 := r.Group("api/v1")
 	{
+		//验证码
+		v1.GET("captchaId", api.GetCaptchaId)
+		v1.GET("captchaCode", api.GetCaptchaCode)
+		//登录
+		v1.POST("user/register", api.UserRegister)
+		v1.POST("user/login", api.UserLogin)
 		task := v1.Group("task")
 		// 上传文件
 		task.POST("file", api.UploadFile)
-		task.GET("downFile", api.DownloadFileObj)
-		task.GET("downFiles", api.DownloadFiles)
+		//获取任务
 		task.GET("getNotUploadStudents", api.GetNotUploadStudents)
 		//authed := v1.Group("/")     //需要登陆保护
-		//课程
-		task.POST("course", api.CreateCourse)
-		task.PUT("course", api.UpdateCourse)
-		task.DELETE("course/:id", api.DeleteCourse)
-		task.GET("course/:id", api.SearchCourse)
-		task.GET("courses", api.SearchCourseList)
-		//任务
-		task.POST("assignment", api.CreateAssignment)
-		task.PUT("assignment", api.UpdateAssignment)
-		task.DELETE("assignment/:id", api.DeleteAssignment)
-		task.GET("assignment/:id", api.SearchAssignment)
+		authed := v1.Group("task") //需要登陆保护
+		authed.Use(middlewares.JWT())
+		{
+			//下载文件
+			authed.GET("downFile", api.DownloadFileObj)
+			authed.GET("downFiles", api.DownloadFiles)
+			//课程
+			authed.POST("course", api.CreateCourse)
+			authed.PUT("course", api.UpdateCourse)
+			authed.DELETE("course/:id", api.DeleteCourse)
+			authed.GET("course/:id", api.SearchCourse)
+			authed.GET("courses", api.SearchCourseList)
+			//任务
+			authed.POST("assignment", api.CreateAssignment)
+			authed.PUT("assignment", api.UpdateAssignment)
+			authed.DELETE("assignment/:id", api.DeleteAssignment)
+			authed.GET("assignment/:id", api.SearchAssignment)
+		}
 		task.GET("assignment", api.SearchAssignmentList)
 
 	}

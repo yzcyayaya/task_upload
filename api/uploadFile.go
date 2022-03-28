@@ -61,9 +61,11 @@ func DownloadFileObj(c *gin.Context) {
 	//下载
 	c.File(filePath)
 }
+func getFills() {
 
-//根据目录下载目录下所有文件
+}
 
+// DownloadFiles 根据目录下载目录下所有文件
 func DownloadFiles(c *gin.Context) {
 
 	//封装信息
@@ -110,7 +112,7 @@ func DownloadFiles(c *gin.Context) {
 
 func GetNotUploadStudents(c *gin.Context) {
 	//封装信息
-	downloadNeed := service.DownloadService{}
+	downloadNeed := service.FilesNameService{}
 	//前端传参过来
 	if err := c.ShouldBind(&downloadNeed); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -118,7 +120,9 @@ func GetNotUploadStudents(c *gin.Context) {
 		})
 	}
 	////前端传递过来的ObjectName是除了桶名后的目录
-	filesName := minioUtil.DirByFilesName(downloadNeed.ObjectName, downloadNeed.BucketName)
+	log.Println(downloadNeed.Dir, downloadNeed.BucketName)
+	filesName := minioUtil.DirByFilesName(downloadNeed.Dir, downloadNeed.BucketName)
+	fmt.Printf("%#v\n", filesName)
 	response := downloadNeed.GetNotUploadStudents(filesName)
 	c.JSON(200, response)
 }

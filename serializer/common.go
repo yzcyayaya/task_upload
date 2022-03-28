@@ -25,3 +25,9 @@ func BuildListResponse(items interface{}, total int64) Response {
 		Msg: "ok",
 	}
 }
+
+//TokenData 带有token的Data结构
+type TokenData struct {
+	User  interface{} `json:"user"`
+	Token string      `json:"token"`
+}

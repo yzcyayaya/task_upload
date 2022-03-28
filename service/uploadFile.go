@@ -1,11 +1,11 @@
 package service
 
 import (
+	conf "controller_minio/config"
 	"controller_minio/model"
 	"controller_minio/serializer"
 	"controller_minio/serializer/e"
 	uuidUtils "controller_minio/utils/uuid"
-	"fmt"
 	"regexp"
 	"strconv"
 	"time"
@@ -28,6 +28,11 @@ type DownloadService struct {
 	PathName string `json:"path_name" form:"path_name"`
 	//下载文件名字
 	DownFileName string `json:"down_file_name" form:"down_file_name"`
+}
+
+type FilesNameService struct {
+	Dir        string `json:"object_dir" form:"object_dir" binding:"required"`
+	BucketName string `json:"bucket_name" form:"bucket_name" binding:"required" `
 }
 
 func (service *FileService) Create(uploads []FileService) *serializer.Response {
@@ -71,9 +76,9 @@ func (service *FileService) Create(uploads []FileService) *serializer.Response {
 	}
 }
 
-func (service *DownloadService) GetNotUploadStudents(filesName []string) *serializer.Response {
+// GetNotUploadStudents 获取没有上传文件和已经上传文件的人员名单
+func (service *FilesNameService) GetNotUploadStudents(filesName []string) *serializer.Response {
 	students := []model.Student{}
-
 	model.DB.Find(&students)
 	total := len(students)
 	var snos []string
@@ -81,15 +86,23 @@ func (service *DownloadService) GetNotUploadStudents(filesName []string) *serial
 	for i, _ := range students {
 		snos = append(snos, strconv.Itoa(students[i].Sno))
 	}
-	fmt.Printf("snos :====%#v", len(snos))
 	//正则
-	compile, _ := regexp.Compile("2021375[23][\\d]{2}")
+	compile, _ := regexp.Compile(conf.Content.MysqlConf.Regular)
+
 	//将每一个学号给剥离出来
-	var upSons []string
+	upSnos := make([]string, 0)
+	var findString string
 	for i, _ := range filesName {
-		upSons = append(upSons, compile.FindString(filesName[i]))
+		//按正则抽离sno
+		findString = compile.FindString(filesName[i])
+		// 比较, 符合才添加
+		if compile.Match([]byte(findString)) {
+			upSnos = append(upSnos, compile.FindString(filesName[i]))
+		}
 	}
-	upLength := len(upSons)
+	//去重
+	upSnos = DelRepetition(upSnos)
+	upLength := len(upSnos)
 	//双层遍历求已提交的人员名单
 	var upSNames []string
 	var nptUpSName []string
@@ -99,7 +112,7 @@ func (service *DownloadService) GetNotUploadStudents(filesName []string) *serial
 	for i, _ := range students {
 		j = 0
 		for j < upLength {
-			if strconv.Itoa(students[i].Sno) == upSons[j] {
+			if strconv.Itoa(students[i].Sno) == upSnos[j] {
 				//删除指定元素并拼接
 				//nptUpSName = append(students[:i ], students[i+1:]...)
 				//存储已经上传的文件名
@@ -122,8 +135,7 @@ func (service *DownloadService) GetNotUploadStudents(filesName []string) *serial
 	}
 }
 
-// 求俩个数组的差集
-
+// SubstrDemo 求俩个切片的差集
 func SubstrDemo(a []string, b []string) []string {
 	var c []string
 	temp := map[string]struct{}{} // map[string]struct{}{}创建了一个key类型为String值类型为空struct的map，Equal -> make(map[string]struct{})
@@ -139,6 +151,27 @@ func SubstrDemo(a []string, b []string) []string {
 			c = append(c, val)
 		}
 	}
-
 	return c
+}
+
+// DelRepetition 给sno切片去重
+func DelRepetition(snos []string) []string {
+	newSnos := make([]string, 0)
+	length := len(snos)
+	var repeat bool
+	for i := 0; i < length; i++ {
+		//是否重复
+		repeat = false
+		for j := i + 1; j < length; j++ {
+			if snos[i] == snos[j] {
+				repeat = true
+				break
+			}
+		}
+		// 不重复则添加进新数组
+		if !repeat {
+			newSnos = append(newSnos, snos[i])
+		}
+	}
+	return newSnos
 }

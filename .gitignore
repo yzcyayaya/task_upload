@@ -2,6 +2,8 @@ build/**
 
 /.idea
 
+/config/study.yaml
+
 /view_mode
 
 /test

@@ -11,6 +11,9 @@ const (
 	ErrorFailEncryption = 10006
 	ErrorNotCompare     = 10007
 
+	//验证码错误
+	ErrorCaptcha = 20000
+
 	ErrorAuthCheckTokenFail    = 30001 //token 错误
 	ErrorAuthCheckTokenTimeout = 30002 //token 过期
 	ErrorAuthToken             = 30003

@@ -34,7 +34,8 @@ func testFormat() {
 	fmt.Println(prefixTime)
 
 	//时间加减 time.ParseDuration()
-	// such as "300ms", "-1.5h" or "2h45m".
+	// such as "300ms", "-1.
+	//5h" or "2h45m".
 	// Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
 	at, _ := time.ParseDuration("2h") //2个小时后的时间, 负数就是之前的时间
 	fmt.Println((t.Add(at)).Format(timeLayoutStr))
