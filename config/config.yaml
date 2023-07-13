@@ -1,8 +1,8 @@
 service:
   app_mode: debug
-  http_port: 9000
+  http_port: 5000
 minio:
-  endpoint: 127.0.0.1:9002
+  endpoint: 127.0.0.1:9100
   access_ｋey_id: root
   secret_access_key: 123456
   # 本地文件存储地址

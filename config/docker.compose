@@ -12,6 +12,7 @@ docker run \
  -v my_data_conf:/etc/mysql \
  -v my_data_file:/var/lib/mysql-files/ \
  -e MYSQL_ROOT_PASSWORD=000000 -d mysql:8
+ create database upload_task character set utf8mb4;
 
 #redis
 docker run -p 6379:6379 --name redis-6.2 \

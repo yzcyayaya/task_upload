@@ -1,0 +1,30 @@
+version: '3'
+volumes:
+  mysql_data_conf:
+  mysql_data_file:
+  minio_data:
+services:
+  mysql:
+    image: mysql:latest
+    container_name: upload_mysql
+    ports:
+      - "3310:3306"
+    environment:
+      - MYSQL_DATABASE=upload_task
+      - MYSQL_ROOT_PASSWORD=000000
+      - TZ=Asia/Shanghai
+    command: --character-set-server=utf8mb4
+    volumes:
+      - mysql_data_conf:/etc/mysql
+      - mysql_data_file:/var/lib/mysql-files/
+  minio:
+    image: bitnami/minio:latest
+    container_name: upload_minio
+    ports:
+      - "9000:9000"
+      - "9100:9100"
+    environment:
+      - MINIO_ROOT_USER=root
+      - MINIO_ROOT_PASSWORD=123456
+    volumes:
+      - minio_data:/data
