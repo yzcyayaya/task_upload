@@ -5,13 +5,14 @@ import (
 	"controller_minio/config"
 	"controller_minio/middlewares"
 	logging "controller_minio/pkg/log"
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 )
 
 func NewRouter() *gin.Engine {
-	r := gin.Default() //生成了一个WSGI应用程序实例
+	r := gin.Default()
 	store := cookie.NewStore([]byte("something-very-secret"))
 	logging.HttpLogToFile(config.Content.ServiceConf.AppMode) // 日志输出
 	r.Use(sessions.Sessions("mysession", store))

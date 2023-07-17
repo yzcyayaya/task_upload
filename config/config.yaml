@@ -1,5 +1,5 @@
 service:
-  app_mode: debug
+  app_mode: release #debug  test 
   http_port: 5000
 minio:
   endpoint: 127.0.0.1:9100

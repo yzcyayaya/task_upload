@@ -7,5 +7,6 @@ build/**
 /view_mode
 
 /test
+/tmp
 
 runtime/http_logs/**
