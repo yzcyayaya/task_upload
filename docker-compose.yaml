@@ -25,6 +25,6 @@ services:
       - "9100:9100"
     environment:
       - MINIO_ROOT_USER=root
-      - MINIO_ROOT_PASSWORD=123456
+      - MINIO_ROOT_PASSWORD=abc123456
     volumes:
       - minio_data:/data

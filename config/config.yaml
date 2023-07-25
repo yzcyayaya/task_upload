@@ -21,6 +21,3 @@ mysql:
   db_name: upload_task
   #学号正则
   regular: "20220308[\\d]{2}"
-#prod
-
-#  sudo ./minio server --address '127.0.0.1:9002' --console-address '127.0.0.1:9001' /data
