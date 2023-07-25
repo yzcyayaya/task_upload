@@ -1,7 +1,6 @@
 package model
 
 import (
-	uuidUtils "controller_minio/utils/uuid"
 	"time"
 )
 
@@ -14,9 +13,9 @@ func migration() {
 	//学生数据不存在则去生成
 	DB.Create(&Students)
 	defaultUser := &User{
-		UserId: uuidUtils.GTimeUUID(),
-		UserName: "admin",
-		CreatedBy: "system",
+		UserId:      "admin",
+		UserName:    "admin",
+		CreatedBy:   "system",
 		CreatedTime: time.Now(),
 		UpdatedTime: time.Now(),
 	}
