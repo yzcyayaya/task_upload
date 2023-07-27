@@ -166,6 +166,11 @@ go build task -o main.go
 ### 简单粗暴部署法：
 
 先装好mysql和minio。
+有docker环境可以运行dockercompose
+```
+docker compose up -d 
+```
+注意：老版本可能使用docker-compose
 
 ##### 后端
 
