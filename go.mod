@@ -3,6 +3,7 @@ module controller_minio
 go 1.17
 
 require (
+	github.com/dchest/captcha v0.0.0-20200903113550-03f5f0333e1f
 	github.com/gin-contrib/sessions v0.0.4
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.9.0
@@ -17,7 +18,6 @@ require (
 )
 
 require (
-	github.com/dchest/captcha v0.0.0-20200903113550-03f5f0333e1f // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect

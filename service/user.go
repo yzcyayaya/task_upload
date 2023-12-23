@@ -6,14 +6,14 @@ import (
 	"controller_minio/serializer/e"
 	util "controller_minio/utils/jwt"
 	uuidUtils "controller_minio/utils/uuid"
-	"github.com/dchest/captcha"
 	"time"
+	"github.com/dchest/captcha"
 )
 
 // UserService 用户注册服务
 type UserService struct {
 	UserName    string `form:"user_name" json:"user_name" binding:"required,min=3,max=15"`
-	Password    string `form:"password" json:"password" binding:"required,min=5,max=16""`
+	Password    string `form:"password" json:"password" binding:"required,min=5,max=16"`
 	CaptchaId   string `form:"captcha_id" json:"captcha_id"`
 	CaptchaCode string `form:"captcha_code" json:"captcha_code"`
 }

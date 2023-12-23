@@ -1,10 +1,10 @@
 service:
   app_mode: release #debug  test 
-  http_port: 5000
+  http_port: 5100
 minio:
   endpoint: 127.0.0.1:9100
-  access_ｋey_id: root
-  secret_access_key: 123456
+  access_key_id: root
+  secret_access_key: abc123456
   # 本地文件存储地址
   local_file: /mydata
 mysql:

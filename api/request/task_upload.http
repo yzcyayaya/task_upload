@@ -1,0 +1,24 @@
+@baseUrl = http://localhost:5100/api/v1
+
+
+### GetCaptchaId 获取验证码ID
+# @name captchaId
+GET {{baseUrl}}/captchaId
+
+### captchaCode 获取验证码
+GET {{baseUrl}}/captchaCode?captcha_id={{captchaId.response.body.data}}
+
+
+### user login 登陆
+POST  {{baseUrl}}/user/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "user_name": "admin",
+    "password": "123456",
+    "captcha_id": "{{captchaId.response.body.data}}",
+    "captcha_code": "1384"
+}
+
+### 
+GET {{baseUrl}}/task/getNotUploadStudents
